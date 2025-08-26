@@ -7,8 +7,10 @@ import threading
 # ---- Discord bot setup ----
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
+# Intents instellen (verplicht voor message_content)
 intents = discord.Intents.default()
 intents.message_content = True
+
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
