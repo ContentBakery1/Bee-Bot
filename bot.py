@@ -7,7 +7,6 @@ import threading
 # ---- Discord bot setup ----
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-# Intents instellen (verplicht voor message_content)
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -21,18 +20,19 @@ async def on_ready():
 async def ping2(ctx):
     await ctx.send("pong")
 
-# ---- Flask webserver (nodig voor Render) ----
+# ---- Flask webserver ----
 app = Flask("")
 
 @app.route("/")
 def home():
     return "Bot is running!"
 
-def run():
+def run_flask():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
 
-# Start Flask in aparte thread
-threading.Thread(target=run).start()
+# Start Flask in a separate thread
+flask_thread = threading.Thread(target=run_flask)
+flask_thread.start()
 
 # Start Discord bot
 bot.run(TOKEN)
